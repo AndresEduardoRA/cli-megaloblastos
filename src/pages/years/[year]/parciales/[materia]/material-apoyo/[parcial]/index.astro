@@ -1,0 +1,80 @@
+---
+import BtnBack from "@/components/UI/BtnBack.astro";
+import CardRecursos from "@/components/UI/cards/CardRecursos.astro";
+import Layout from "@/layouts/Layout.astro";
+import { supabase } from "@/utils/supabase";
+import HelpBtns from "@/components/UI/HelpBtns.astro";
+
+// props
+// const params = Astro.params;
+const { year, materia, parcial } = Astro.params;
+const reWrite = {
+  1: "Nro 1",
+  2: "Nro 2",
+  3: "Nro 3",
+};
+
+const { data: materialSupports = [] } = await supabase
+  .from("materials")
+  .select("*")
+  .eq("year", year)
+  .eq("subject", materia)
+  .eq("partial", parcial);
+
+---
+
+<Layout title="parciales">
+  <section class="w-[80dvw] mx-auto max-w-2xl">
+    <p
+      data-aos="fade-down"
+      data-aos-delay="50"
+      class="font-bold text-neutral-600 dark:text-neutral-300 text-center leading-none mt-10"
+    >
+      Bienvenidos al
+    </p>
+    <h2
+      data-aos="fade-up"
+      data-aos-delay="50"
+      class="text-2xl sm:text-3xl md:text-4xl uppercase font-black text-neutral-800 dark:text-neutral-50 text-center"
+    >
+      material de apoyo
+    </h2>
+    <p
+      data-aos="fade-up"
+      data-aos-delay="100"
+      class="text-center font-bold text-primary mb-5"
+    >
+      #Megaloblastos
+    </p>
+    <section class="mb-5">
+      <p class="font-bold capitalize text-neutral-800 dark:text-neutral-200">
+        año: <span class="font-normal capitalize">{year}</span>
+      </p>
+      <p class="font-bold capitalize text-neutral-800 dark:text-neutral-200">
+        materia: <span class="font-normal capitalize">{materia}</span>
+      </p>
+      <p class="font-bold capitalize text-neutral-800 dark:text-neutral-200">
+        parcial: <span class="font-normal capitalize">{reWrite[parcial]}</span>
+      </p>
+    </section>
+    <BtnBack />
+    <ul class="space-y-4 pt-5 pb-10">
+      {
+        materialSupports?.length == 0 ? (
+          <div
+            class="dark:text-neutral-300"
+            data-aos="fade-up"
+            data-aos-delay="50"
+          >
+            <p class="block">Sección vacía, pide material de apoyo a:</p>
+            <HelpBtns />
+          </div>
+        ) : (
+          materialSupports?.map((material) => (
+            <CardRecursos material={material} />
+          ))
+        )
+      }
+    </ul>
+  </section>
+</Layout>

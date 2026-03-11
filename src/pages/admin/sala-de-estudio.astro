@@ -1,0 +1,16 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import BookingsTable from "../../components/admin/BookingsTable.vue";
+---
+
+<AdminLayout title="Gestión de Sala de Estudio">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-neutral-800 dark:text-neutral-100">
+            Sala de Estudio
+        </h1>
+        <p class="text-neutral-600 dark:text-neutral-400">
+            Revisa y administra las reservas de la sala de estudio.
+        </p>
+    </div>
+    <BookingsTable client:load />
+</AdminLayout>

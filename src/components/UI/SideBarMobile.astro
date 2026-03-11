@@ -1,0 +1,108 @@
+---
+import { Image } from "astro:assets";
+import megaloblastosPng from "@/assets/megaloblastos.png";
+import menu from "@/consts/menu";
+const currentPath = Astro.url.pathname;
+---
+
+<button
+  id="sidebar-mobile-button"
+  class="text-primary dark:text-neutral-50 text-2xl font-bold lg:hidden"
+  aria-label="Toggle Sidebar"
+>
+  <i class="ri-menu-2-line"></i>
+</button>
+
+<aside
+  id="sidebar-mobile"
+  class="transition-all duration-500 z-20 bg-neutral-800 text-white fixed top-0 bottom-0 -left-64 w-64 lg:hidden"
+  aria-hidden="true"
+>
+  <header class="py-3 px-6 border-b border-b-neutral-500">
+    <a href="/" class="flex gap-2 items-center">
+      <Image
+        class="w-10 h-10 rounded-full object-cover"
+        src={megaloblastosPng}
+        alt="Icono megaloblastos"
+        width={300}
+        height={300}
+      />
+      <h2 class="text-lg font-medium uppercase">Megaloblastos</h2>
+    </a>
+  </header>
+  <main>
+    <nav class="text-neutral-300 p-4">
+      <a
+        href="/"
+        class={`flex items-center gap-1 py-2 px-6 rounded-md transition-all duration-200 ${currentPath === "/" ? "bg-amber-600 text-neutral-50" : "hover:text-neutral-50 hover:bg-neutral-600"}`}
+      >
+        <i class="ri-home-3-line text-2xl"></i>
+        <span class="leading-none">Inicio</span>
+      </a>
+      <ul>
+        <li class="uppercase font-semibold px-6 py-1">Accesos Rápidos</li>
+        <ul class="space-y-1">
+          {
+            menu.accesoRapido.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class={`flex items-center gap-1 py-2 px-6 rounded-md transition-all duration-200 ${currentPath === item.href ? "bg-amber-600 text-neutral-50" : "hover:text-neutral-50 hover:bg-neutral-600"}`}
+                >
+                  <i class={item.icon} />
+                  <span class="leading-none">{item.title}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </ul>
+      <ul>
+        <li class="uppercase font-semibold px-6 py-1">Contáctanos</li>
+        <ul class="space-y-1">
+          {
+            menu.contactanos.map((item) => (
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={item.href}
+                  class={`flex items-center gap-1 py-2 px-6 rounded-md transition-all duration-200 ${currentPath === item.href ? "bg-amber-600 text-neutral-50" : "hover:text-neutral-50 hover:bg-neutral-600"}`}
+                >
+                  <i class={item.icon} />
+                  <span class="leading-none">{item.title}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </ul>
+    </nav>
+  </main>
+</aside>
+
+<div
+  id="sidebar-background"
+  class="transition-all duration-500 z-10 hidden fixed inset-0 bg-neutral-950/50 lg:hidden"
+  aria-hidden="true"
+>
+</div>
+
+<script is:inline>
+  const sidebarMobileButton = document.querySelector("#sidebar-mobile-button");
+  const sidebarMobile = document.querySelector("#sidebar-mobile");
+  const sidebarBackground = document.querySelector("#sidebar-background");
+
+  function toggleSidebar() {
+    sidebarMobile.classList.toggle("-left-64");
+    sidebarMobile.classList.toggle("left-0");
+    sidebarBackground.classList.toggle("hidden");
+
+    const isOpen = sidebarMobile.classList.contains("left-0");
+    sidebarMobile.setAttribute("aria-hidden", !isOpen);
+    sidebarBackground.setAttribute("aria-hidden", !isOpen);
+  }
+
+  sidebarMobileButton.addEventListener("click", toggleSidebar);
+  sidebarBackground.addEventListener("click", toggleSidebar);
+</script>

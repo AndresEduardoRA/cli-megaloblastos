@@ -1,0 +1,24 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import UsersTable from "../../components/admin/UsersTable.vue";
+---
+
+<AdminLayout>
+    <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8"
+    >
+        <div>
+            <h1
+                class="text-3xl font-bold text-neutral-800 dark:text-neutral-100"
+            >
+                Gestión de Usuarios
+            </h1>
+            <p class="text-neutral-600 dark:text-neutral-400 mt-1">
+                Administra los usuarios registrados en la plataforma.
+            </p>
+        </div>
+    </div>
+
+    <!-- Client-side table with modal support -->
+    <UsersTable client:load />
+</AdminLayout>

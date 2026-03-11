@@ -1,0 +1,25 @@
+---
+import HeaderCards from "@/components/UI/HeaderCards.astro";
+import Layout from "@/layouts/Layout.astro";
+
+// props
+const { materia } = Astro.params;
+import { materias } from "@/consts/db";
+import CardDocente from "@/components/UI/cards/CardDocente.astro";
+import BtnBack from "@/components/UI/BtnBack.astro";
+const materiaFiltered = materias.filter((m) => m.name === materia);
+---
+
+<Layout title={`${materia}`}>
+  <section class="w-[80dvw] mx-auto max-w-2xl">
+    <HeaderCards text1="Docentes de" text2={materia} />
+    <BtnBack />
+    <ul class="space-y-4 pt-5 pb-10">
+      {
+        materiaFiltered[0].docentes.map((docente) => (
+          <CardDocente docente={docente} nameMateria={materia} />
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

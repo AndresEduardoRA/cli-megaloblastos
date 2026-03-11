@@ -1,0 +1,15 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import GlobalChat from "@/components/Chat.vue";
+import HeaderCards from "@/components/UI/HeaderCards.astro";
+---
+
+<Layout title="Chat Global | Megaloblastos">
+  <HeaderCards
+    text1="Conecta con otros estudiantes"
+    text2="Comunidad Megaloblastos"
+  />
+  <div class="w-full max-w-3xl mx-auto px-6">
+    <GlobalChat client:only="vue" />
+  </div>
+</Layout>

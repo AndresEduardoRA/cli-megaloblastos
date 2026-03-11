@@ -1,0 +1,338 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getServerSupabase } from "../utils/supabase";
+
+const supabase = getServerSupabase(Astro);
+const { user } = Astro.locals;
+
+if (!user) {
+  return Astro.redirect("/auth/login");
+}
+
+let message = "";
+let messageType = "info"; // info, success, error
+
+// Helper to check cooldown
+const checkCooldown = (lastUpdate: string | null) => {
+  if (!lastUpdate) return true;
+  const last = new Date(lastUpdate).getTime();
+  const now = new Date().getTime();
+  const diffTime = Math.abs(now - last);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays > 30;
+};
+
+const getDaysRemaining = (lastUpdate: string | null) => {
+  if (!lastUpdate) return 0;
+  const last = new Date(lastUpdate).getTime();
+  const now = new Date().getTime();
+  const diffTime = Math.abs(now - last);
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+  return Math.ceil(30 - diffDays);
+};
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const action = formData.get("action");
+
+  if (action === "logout") {
+    await supabase.auth.signOut();
+    return Astro.redirect("/");
+  }
+
+  // Fetch current profile to check timestamps
+  const { data: currentProfile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if (action === "update_student_code") {
+    // @ts-ignore
+    if (!checkCooldown(currentProfile?.student_code_updated_at)) {
+      message = "Solo puedes actualizar este campo una vez cada 30 días.";
+      messageType = "error";
+    } else {
+      const newVal = formData.get("student_code") as string;
+      // @ts-ignore
+      const { error } = await supabase
+        .from("profiles")
+        // @ts-ignore
+        .update({ 
+          student_code: newVal,
+          student_code_updated_at: new Date().toISOString()
+        })
+        .eq("id", user.id);
+      
+      if (error) {
+         message = "Error al actualizar: " + error.message;
+         messageType = "error";
+      } else {
+         message = "Código de estudiante actualizado.";
+         messageType = "success";
+      }
+    }
+  }
+
+  if (action === "update_phone") {
+    // @ts-ignore
+    if (!checkCooldown(currentProfile?.phone_updated_at)) {
+      message = "Solo puedes actualizar este campo una vez cada 30 días.";
+      messageType = "error";
+    } else {
+      const newVal = formData.get("phone") as string;
+      // @ts-ignore
+      const { error } = await supabase
+        .from("profiles")
+        // @ts-ignore
+        .update({ 
+          phone: newVal,
+          phone_updated_at: new Date().toISOString()
+        })
+        .eq("id", user.id);
+
+      if (error) {
+         message = "Error al actualizar: " + error.message;
+         messageType = "error";
+      } else {
+         message = "Teléfono actualizado.";
+         messageType = "success";
+      }
+    }
+  }
+
+  if (action === "update_carnet") {
+    // @ts-ignore
+    if (!checkCooldown(currentProfile?.carnet_number_updated_at)) {
+      message = "Solo puedes actualizar este campo una vez cada 30 días.";
+      messageType = "error";
+    } else {
+      const newVal = formData.get("carnet_number") as string;
+      // @ts-ignore
+      const { error } = await supabase
+        .from("profiles")
+        // @ts-ignore
+        .update({ 
+          carnet_number: newVal,
+          carnet_number_updated_at: new Date().toISOString()
+        })
+        .eq("id", user.id);
+
+      if (error) {
+         message = "Error al actualizar: " + error.message;
+         messageType = "error";
+      } else {
+         message = "Carnet actualizado.";
+         messageType = "success";
+      }
+    }
+  }
+}
+
+const { data: profile } = await supabase
+  .from("profiles")
+  .select("*")
+  .eq("id", user.id)
+  .single();
+  
+// Calculate UI states
+// @ts-ignore
+const canUpdateCode = checkCooldown(profile?.student_code_updated_at);
+// @ts-ignore
+const canUpdatePhone = checkCooldown(profile?.phone_updated_at);
+// @ts-ignore
+const canUpdateCarnet = checkCooldown(profile?.carnet_number_updated_at);
+---
+
+<Layout title="Mi Perfil - Megaloblastos">
+  <div class="max-w-4xl mx-auto p-6 py-12">
+    
+    {message && (
+      <div class={`p-4 mb-6 rounded-lg ${messageType === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+        {message}
+      </div>
+    )}
+
+    <div
+      class="bg-white dark:bg-neutral-900 rounded-lg shadow-xl overflow-hidden border border-neutral-200 dark:border-neutral-700"
+    >
+      <div class="p-8">
+        <div
+          class="flex gap-6 flex-col md:flex-row items-start md:items-center justify-between mb-8 pb-8 border-b border-neutral-200 dark:border-neutral-700"
+        >
+          <div class="flex flex-col md:flex-row items-start gap-6">
+            <div
+              class="w-24 h-24 rounded-full bg-amber-600 flex items-center justify-center text-white text-3xl font-bold"
+            >
+              <!-- @ts-ignore -->
+              {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+            </div>
+            <div>
+              <h1
+                class="text-3xl font-bold text-neutral-900 dark:text-neutral-100"
+              >
+                <!-- @ts-ignore -->
+                {profile?.first_name}
+                <!-- @ts-ignore -->
+                {profile?.last_name}
+              </h1>
+              <p class="text-neutral-500 dark:text-neutral-400">
+                {user.email}
+              </p>
+              <span
+                class="inline-block mt-2 px-3 py-1 text-sm font-semibold rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 capitalize"
+              >
+                <!-- @ts-ignore -->
+                {profile?.role === 'super_admin' ? 'Super Admin' : profile?.role === 'admin' ? 'Administrador' : 'Estudiante'}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            {
+              // @ts-ignore
+              (profile?.role === "admin" || profile?.role === "super_admin") && (
+                <a
+                  href="/admin/materiales"
+                  class="px-5 py-2.5 bg-neutral-800 hover:bg-neutral-900 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-white rounded-lg transition font-medium text-center"
+                >
+                  Panel Admin
+                </a>
+              )
+            }
+            <form method="POST">
+              <input type="hidden" name="action" value="logout" />
+              <button
+                type="submit"
+                class="w-full px-5 py-2.5 border border-red-500 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition font-medium"
+              >
+                Cerrar Sesión
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Information Sections -->
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+              Información Académica
+            </h3>
+            <div class="bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-lg space-y-4">
+              
+              <!-- Student Code -->
+              <form method="POST" class="space-y-2">
+                <input type="hidden" name="action" value="update_student_code" />
+                <label class="block text-sm font-medium text-neutral-500 dark:text-neutral-400">
+                  Código de Estudiante
+                </label>
+                <div class="flex gap-2">
+                  <!-- @ts-ignore -->
+                  <input 
+                    type="text" 
+                    name="student_code"
+                    required
+                    pattern="[0-9]+"
+                    value={profile?.student_code || ""}
+                    disabled={!canUpdateCode}
+                    class="flex-1 px-3 py-2 rounded border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 dark:text-neutral-100 disabled:opacity-50 disabled:bg-neutral-200 dark:disabled:bg-neutral-800"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={!canUpdateCode}
+                    class="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Actualizar
+                  </button>
+                </div>
+                {!canUpdateCode && (
+                  <p class="text-xs text-red-500">
+                    <!-- @ts-ignore -->
+                    Podrás actualizar en {getDaysRemaining(profile?.student_code_updated_at)} días.
+                  </p>
+                )}
+              </form>
+
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+              Información de Contacto
+            </h3>
+            <div class="bg-neutral-50 dark:bg-neutral-800/50 p-6 rounded-lg space-y-4">
+              
+              <!-- Phone -->
+              <form method="POST" class="space-y-2">
+                <input type="hidden" name="action" value="update_phone" />
+                <label class="block text-sm font-medium text-neutral-500 dark:text-neutral-400">
+                  Teléfono
+                </label>
+                <div class="flex gap-2">
+                  <!-- @ts-ignore -->
+                  <input 
+                    type="text" 
+                    name="phone"
+                    required
+                    pattern="[0-9]+"
+                    value={profile?.phone || ""}
+                    disabled={!canUpdatePhone}
+                    class="flex-1 px-3 py-2 rounded border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 dark:text-neutral-100 disabled:opacity-50 disabled:bg-neutral-200 dark:disabled:bg-neutral-800"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={!canUpdatePhone}
+                    class="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Actualizar
+                  </button>
+                </div>
+                {!canUpdatePhone && (
+                  <p class="text-xs text-red-500">
+                    <!-- @ts-ignore -->
+                    Podrás actualizar en {getDaysRemaining(profile?.phone_updated_at)} días.
+                  </p>
+                )}
+              </form>
+
+              <!-- Carnet -->
+              <form method="POST" class="space-y-2">
+                <input type="hidden" name="action" value="update_carnet" />
+                <label class="block text-sm font-medium text-neutral-500 dark:text-neutral-400">
+                  Carnet
+                </label>
+                <div class="flex gap-2">
+<!-- @ts-ignore -->
+                  <input 
+                    type="text" 
+                    name="carnet_number"
+                    required
+                    pattern="[0-9]+"
+                    value={profile?.carnet_number || ""}
+                    disabled={!canUpdateCarnet}
+                    class="flex-1 px-3 py-2 rounded border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 dark:text-neutral-100 disabled:opacity-50 disabled:bg-neutral-200 dark:disabled:bg-neutral-800"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={!canUpdateCarnet}
+                    class="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Actualizar
+                  </button>
+                </div>
+                {!canUpdateCarnet && (
+                  <p class="text-xs text-red-500">
+                   <!-- @ts-ignore -->
+                    Podrás actualizar en {getDaysRemaining(profile?.carnet_number_updated_at)} días.
+                  </p>
+                )}
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

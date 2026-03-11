@@ -1,0 +1,19 @@
+---
+import BtnBack from "@/components/UI/BtnBack.astro";
+import CardParcial from "@/components/UI/cards/CardParcial.astro";
+import HeaderCards from "@/components/UI/HeaderCards.astro";
+import Layout from "@/layouts/Layout.astro";
+
+// props
+const { docente } = Astro.params;
+---
+
+<Layout title={`${docente}`}>
+  <section class="w-[80dvw] mx-auto max-w-2xl">
+    <HeaderCards text1="Parciales del docente" text2={docente} />
+    <BtnBack />
+    <ul class="space-y-4 pt-5 pb-10">
+      {[1, 2, 3].map((item) => <CardParcial item={item} docente={docente} />)}
+    </ul>
+  </section>
+</Layout>

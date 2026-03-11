@@ -1,0 +1,24 @@
+---
+const { item, docente, isMultigrupo = false, materia } = Astro.props;
+
+const reWrite = {
+  1: "primer",
+  2: "segundo",
+  3: "tercer",
+};
+---
+
+<li class="py-6 px-8 bg-white dark:bg-neutral-800 shadow-md rounded-md">
+  <h3
+    class="text-xl font-bold uppercase text-neutral-700 dark:text-neutral-200 border-b pb-2 mb-2"
+  >
+    {reWrite[item]} parcial
+  </h3>
+  <nav class="flex gap-2 flex-wrap justify-between">
+    <a
+      class="text-primary underline"
+      href={`${isMultigrupo ? `${materia}/material-apoyo/${item}` : `${docente}/material-apoyo/${item}`}`}
+      >Ver</a
+    >
+  </nav>
+</li>

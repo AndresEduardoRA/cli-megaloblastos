@@ -1,0 +1,21 @@
+---
+const { material } = Astro.props;
+---
+
+<li class="py-6 px-8 bg-white dark:bg-neutral-800 shadow-md rounded-md w-full">
+  <h3
+    class="text-center text-ellipsis overflow-hidden text-nowrap capitalize text-2xl text-neutral-800 dark:text-neutral-200"
+  >
+    {material.type}
+  </h3>
+  <div class="flex justify-center py-3">
+    <a
+      href={material.url}
+      class="bg-primary py-2 px-6 rounded-md font-medium text-neutral-200 text-center inline-block inset-x-auto hover:bg-orange-500"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Ver Recursos
+    </a>
+  </div>
+</li>

@@ -1,0 +1,16 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import MaterialsTable from "../../components/admin/MaterialsTable.vue";
+---
+
+<AdminLayout title="Gestión de Materiales">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-neutral-800 dark:text-neutral-100">
+            Gestión de Materiales
+        </h1>
+        <p class="text-neutral-600 dark:text-neutral-400">
+            Administra, agrega y edita los materiales de apoyo.
+        </p>
+    </div>
+    <MaterialsTable client:load />
+</AdminLayout>
