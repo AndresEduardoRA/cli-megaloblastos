@@ -1,89 +1,36 @@
-# Megaloblastos Platform
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A developer-focused platform designed to manage and interact with Megaloblastos-related workflows and data.
+## Getting Started
 
-This project is part of my personal portfolio and showcases my approach to building scalable tools, modular architectures, and developer-friendly interfaces.
+First, run the development server:
 
-**Upcoming Migration:** This project will soon be migrated to **Next.js** as part of a full-stack architecture upgrade.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
----
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Overview
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-The Megaloblastos Platform provides tools to streamline workflows and manage data through a modular architecture.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-The current implementation focuses on a CLI-based structure, designed for extensibility and rapid iteration.
+## Learn More
 
-Future versions will introduce a web interface powered by **Next.js**, enabling a richer user experience and full-stack capabilities.
+To learn more about Next.js, take a look at the following resources:
 
----
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Tech Stack
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Current stack:
+## Deploy on Vercel
 
-- Node.js
-- JavaScript / TypeScript
-- CLI architecture
-- Modular services
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Planned stack after migration:
-
-- Next.js
-- React
-- Full-stack architecture
-- Web-based UI
-
----
-
-## Features
-
-- CLI-based workflow management
-- Modular architecture
-- Extensible command system
-- Developer-oriented tooling
-
----
-
-## Project Status
-
-**Work in Progress**
-
-Current version: CLI-based implementation
-
-Next milestone:
-
-- Migration to **Next.js**
-- Introduction of a web interface
-- Expansion of platform capabilities
-
----
-
-## Roadmap
-
-- [x] Initial CLI implementation
-- [ ] Core module refactor
-- [ ] Migration to Next.js
-- [ ] Web dashboard
-- [ ] API layer
-- [ ] Improved developer experience
-
----
-
-## Motivation
-
-This project was created to explore:
-
-- scalable architecture patterns
-- CLI tooling for developer workflows
-- modular code organization
-- future migration paths toward full-stack applications
-
----
-
-## Author
-
-Andres Alpiri
-
-- GitHub: [https://github.com/AndresEduardoRA](https://github.com/AndresEduardoRA)
-- Portfolio: [https://me.niuvu.com](https://me.niuvu.com)
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
