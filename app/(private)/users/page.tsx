@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAllProfilesAction, updateProfileAction } from "@/actions/profiles";
+import { getAllProfilesAction, getCurrentUserAction, updateProfileAction } from "@/actions/profiles";
 import {
   Search,
   User as UserIcon,
@@ -12,23 +12,31 @@ import {
   X,
 } from "lucide-react";
 import { UserProfile } from "@/types/user-profile";
+import { useRouter } from "next/navigation";
 
 export default function PrivateUsersPage() {
+    const router = useRouter();
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<UserProfile>>({});
 
-  useEffect(() => {
+ useEffect(() => {
     const fetchData = async () => {
+      const currentUser = await getCurrentUserAction();
+      if (currentUser?.role !== "super_admin") {
+        router.replace("/"); // redirige fuera si no es super_admin
+        return;
+      }
+
       const profiles = await getAllProfilesAction();
       setUsers(profiles);
       setLoading(false);
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   const handleToggleBlock = async (user: UserProfile) => {
     await updateProfileAction(user.id, { is_blocked: !user.is_blocked });
