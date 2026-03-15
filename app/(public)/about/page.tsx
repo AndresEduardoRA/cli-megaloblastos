@@ -10,19 +10,33 @@ export default function AboutPage() {
         </h1>
         <div className="prose prose-neutral dark:prose-invert max-w-none">
           <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            Megaloblastos nació como una iniciativa de estudiantes de medicina
-            para facilitar el acceso a materiales de estudio y servicios
-            esenciales dentro de nuestra facultad. Con el tiempo, nos hemos
-            convertido en un referente de apoyo académico y servicios
-            estudiantiles, siempre con el objetivo de mejorar la calidad de vida
-            de nuestros compañeros.
+            Megaloblastos nace dentro de la carrera de Medicina con el objetivo
+            de fortalecer la representación estudiantil mediante el Centro de
+            Estudiantes de Medicina (CEM). Desde sus inicios, el grupo se ha
+            guiado por principios fundamentales como la honestidad, la
+            transparencia y el trabajo, buscando construir un centro interno
+            abierto, responsable y comprometido con las necesidades de los
+            estudiantes.
           </p>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            Desde el alquiler de batas hasta la gestión de salas de estudio,
-            cada servicio ha sido diseñado pensando en las necesidades reales
-            del estudiante de medicina. Nuestra misión es seguir creciendo y
-            digitalizando procesos para que el estudio sea la única preocupación
-            de nuestros miembros.
+            Trabajamos por una gestión cercana a sus compañeros, impulsando
+            iniciativas académicas, defendiendo los intereses estudiantiles y
+            promoviendo una comunidad universitaria basada en el esfuerzo
+            colectivo y la integridad.
+          </p>
+          <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Como parte de sus iniciativas, Megaloblastos impulsa una página web
+            académica, destinada a reunir y organizar material de estudio por
+            materias para facilitar el acceso al conocimiento, además de ofrecer
+            servicios de alquiler de batas, reserva de sala de estudio y un
+            sistema de contacto con los integrantes de la plancha, con el fin de
+            brindar apoyo y mantener una comunicación directa con los
+            estudiantes.
+          </p>
+          <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Megaloblastos trabaja por una gestión cercana a sus compañeros,
+            fomentando la colaboración, el crecimiento académico y una comunidad
+            universitaria basada en el esfuerzo colectivo.
           </p>
         </div>
       </section>

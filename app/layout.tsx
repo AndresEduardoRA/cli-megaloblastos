@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import GlobalChat from "@/components/GlobalChat";
@@ -32,18 +32,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-2DMJKZMXM2"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-2DMJKZMXM2');
-          `}
-        </Script>
+        <GoogleAnalytics gaId="G-2DMJKZMXM2" />
       </head>
 
       <body
