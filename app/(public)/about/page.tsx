@@ -1,4 +1,4 @@
-import { Instagram, Github, Mail, Globe, FacebookIcon, Youtube } from "lucide-react";
+import { Instagram, FacebookIcon, Youtube } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -64,7 +64,7 @@ export default function AboutPage() {
       </section>
 
       {/* Desarrollador */}
-      <section className="p-8 bg-amber-50 dark:bg-amber-900/20 rounded-2xl border border-amber-100 dark:border-amber-900/30 space-y-6">
+      {/* <section className="p-8 bg-amber-50 dark:bg-amber-900/20 rounded-2xl border border-amber-100 dark:border-amber-900/30 space-y-6">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-md">
             AA
@@ -112,7 +112,7 @@ export default function AboutPage() {
             <span>andres.ra@niuvu.com</span>
           </a>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
