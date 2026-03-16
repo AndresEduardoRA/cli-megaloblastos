@@ -8,18 +8,18 @@ export default function AboutPage() {
         <h1 className="text-4xl font-bold text-neutral-800 dark:text-white">
           Nuestra Historia
         </h1>
-        <div className="prose prose-neutral dark:prose-invert max-w-none">
+        <div className="prose prose-neutral dark:prose-invert max-w-none space-y-6">
           <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
             Megaloblastos nace dentro de la carrera de Medicina con el objetivo
             de fortalecer la representación estudiantil mediante el Centro de
             Estudiantes de Medicina (CEM). Desde sus inicios, el grupo se ha
-            guiado por principios fundamentales como la honestidad, la
+            guiado por principios fundamentales como la academia, la
             transparencia y el trabajo, buscando construir un centro interno
             abierto, responsable y comprometido con las necesidades de los
             estudiantes.
           </p>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            Trabajamos por una gestión cercana a sus compañeros, impulsando
+            Trabajamos por una gestión cercana a los estudiantes, impulsando
             iniciativas académicas, defendiendo los intereses estudiantiles y
             promoviendo una comunidad universitaria basada en el esfuerzo
             colectivo y la integridad.

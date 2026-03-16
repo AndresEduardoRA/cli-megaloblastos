@@ -25,7 +25,7 @@ export default function PrivateUsersPage() {
  useEffect(() => {
     const fetchData = async () => {
       const currentUser = await getCurrentUserAction();
-      if (currentUser?.role !== "super_admin") {
+      if (currentUser?.app_metadata.role !== "super_admin") {
         router.replace("/"); // redirige fuera si no es super_admin
         return;
       }
