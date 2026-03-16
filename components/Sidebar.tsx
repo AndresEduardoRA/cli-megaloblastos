@@ -62,6 +62,7 @@ export default function Sidebar({ isOpen, onClose, items }: SidebarProps) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={onClose}
                   className={`group flex items-center gap-3 p-3 rounded-xl transition-all duration-200 relative ${
                     isActive
                       ? "bg-amber-600 text-white shadow-md shadow-amber-500/20"
