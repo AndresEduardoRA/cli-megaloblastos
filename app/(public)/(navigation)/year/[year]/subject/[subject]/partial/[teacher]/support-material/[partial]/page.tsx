@@ -80,3 +80,22 @@ export default async function Page({ params }: Props) {
     </section>
   );
 }
+
+export const revalidate = 3600;
+
+export function generateStaticParams() {
+  const params: { year: string; subject: string; teacher: string; partial: string }[] = [];
+  for (const subject of SUBJECTS) {
+    for (const teacher of subject.teachers) {
+      for (const partial of ["1", "2", "3"]) {
+        params.push({
+          year: subject.year.toString(),
+          subject: subject.path,
+          teacher: teacher.path,
+          partial,
+        });
+      }
+    }
+  }
+  return params;
+}

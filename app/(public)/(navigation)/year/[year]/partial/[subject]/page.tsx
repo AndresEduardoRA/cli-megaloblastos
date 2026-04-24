@@ -75,3 +75,16 @@ export default async function PublicPartialMaterialSupportPage({
     </>
   );
 }
+
+export function generateStaticParams() {
+  const params: { year: string; subject: string }[] = [];
+  for (const subject of SUBJECTS) {
+    if (subject.multigrupo) {
+      params.push({
+        year: subject.year.toString(),
+        subject: subject.path,
+      });
+    }
+  }
+  return params;
+}

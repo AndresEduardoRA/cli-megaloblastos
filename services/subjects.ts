@@ -9,7 +9,7 @@ export async function getSubjectSupportMaterials(params: {
 
   const { data, error } = await supabase
     .from("materials")
-    .select("*")
+    .select("id, title, type, url")
     .eq("year", params.year)
     .eq("subject", params.subject)
     .eq("partial", params.partial);
@@ -29,7 +29,7 @@ export async function getSubjectSupportMaterialsByTeacher(params: {
 
   const { data, error } = await supabase
     .from("materials")
-    .select("*")
+    .select("id, title, type, url")
     .eq("year", params.year)
     .eq("subject", params.subject)
     .eq("teacher", params.teacher)

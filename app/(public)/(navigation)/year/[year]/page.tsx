@@ -40,3 +40,13 @@ export default async function YearPage({
     </section>
   );
 }
+
+export function generateStaticParams() {
+  return [
+    { year: "1" },
+    { year: "2" },
+    { year: "3" },
+    { year: "4" },
+    { year: "5" },
+  ];
+}

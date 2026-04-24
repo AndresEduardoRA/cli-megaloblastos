@@ -30,3 +30,10 @@ async function PageSubject({
 }
 
 export default PageSubject;
+
+export function generateStaticParams() {
+  return SUBJECTS.map((subject) => ({
+    year: subject.year.toString(),
+    subject: subject.path,
+  }));
+}

@@ -1,5 +1,6 @@
 import CardPartial from "@/components/CardPartial";
 import HeaderCards from "@/components/HeaderCards";
+import { SUBJECTS } from "@/consts/SUBJECTS";
 
 type Props = {
   params: Promise<{
@@ -21,4 +22,18 @@ export default async function Page({ params }: Props) {
       </ul>
     </section>
   );
+}
+
+export function generateStaticParams() {
+  const params: { year: string; subject: string; teacher: string }[] = [];
+  for (const subject of SUBJECTS) {
+    for (const teacher of subject.teachers) {
+      params.push({
+        year: subject.year.toString(),
+        subject: subject.path,
+        teacher: teacher.path,
+      });
+    }
+  }
+  return params;
 }
